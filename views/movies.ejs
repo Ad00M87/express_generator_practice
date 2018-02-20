@@ -24,9 +24,19 @@
        </thead>
        <tbody>
          <% movies.forEach( function(movie) { %>
-           <tr>
-             <td><%= movie.title %></td>
-         <% }); %>
+          <% var url = "/movies/" + movie.id + "?_method=DELETE" %>
+          <% var editUrl = "movies/" + movie.id + "/edit" %>
+          <tr>
+            <td><%= movie.title %></td>
+            <td>
+              <a class="btn" href=<%= editUrl %>>Edit</a>
+            </td>
+            <td>
+              <form method="POST" action=<%= url %>>
+                <button class="btn red">Delete</button>
+              </form>
+           </td>
+          </tr>
        </tbody>
      </table>
    </body>
