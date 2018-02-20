@@ -4,8 +4,12 @@ var Movie = require('../models').Movie;
 
 /* GET movie listings. */
 router.get('/', function(req, res) {
-  Movie.all()
-    .then( function(movies) {
+  Movie.all({
+    order: [
+      ['createdAt', 'ASC']
+    ]
+  })
+  .then( function(movies) {
       return res.render('movies', { movies: movies });
   })
 });
@@ -34,6 +38,16 @@ router.get('/:id/edit', function(req, res) {
     .then( function(movie) {
       return res.render('edit', { movie: movie });
   });
+});
+
+router.put('/:id', function(req, res) {
+  Movie.update(
+    { title: req.body.title },
+    { where: { id: req.params.id } }
+  )
+  .then( function() {
+    return res.redirect('/movies');
+  })
 });
 
 module.exports = router;
